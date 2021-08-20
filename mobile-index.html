@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cocacola</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      .container {
+        background-color: #232323;
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+      }
+      .container .circle {
+        position: absolute;
+        background-color: rgb(189, 3, 3);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip-path: circle(70% at right -20%);
+      }
+      nav {
+        display: flex;
+        min-height: 10vh;
+        width: 80%;
+        margin: auto;
+        padding: 4rem;
+        z-index: 1;
+      }
+      nav .logo {
+        flex: 2;
+        z-index: 2;
+      }
+      .navbar {
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        flex: 1;
+      }
+      .navbar li {
+        margin: 0 2rem;
+        font-size: 3rem;
+      }
+      .navbar li a {
+        color: white;
+        text-decoration: none;
+      }
+      .content-area {
+        display: grid;
+        align-items: center;
+        min-height: 80vh;
+        width: 100%;
+        grid-template-columns: 10% minmax(5rem, 1fr) 1fr;
+      }
+      .content {
+        z-index: 2;
+        grid-column: 2/3;
+        color: white;
+      }
+      .content h1 {
+        padding: 3rem 0;
+        font-size: 6rem;
+      }
+      .content p {
+        font-size: 3rem;
+        padding-bottom: 3rem;
+      }
+      .content .btn {
+        padding: 1.3rem 2.4rem;
+        border-radius: 3rem;
+        background-color: rgb(201, 0, 0);
+        color: white;
+        font-size: 2rem;
+        display: inline-block;
+        width: fit-content;
+      }
+      .icons {
+        display: flex;
+        grid-column: 2/3;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .icon {
+        list-style: none;
+        margin: 0 1rem;
+        padding: 1rem;
+      }
+      .facebook {
+        padding: 2rem 1rem 2rem 0;
+        margin: 0 1rem 0 0;
+      }
+      .icon a {
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 50%;
+        background-color: #4a4a4a;
+        width: 50px;
+        height: 50px;
+        transition: 0.3 ease-in-out;
+      }
+      .icon a:hover {
+        transform: translateY(-10px);
+        background-color: rgb(201, 0, 0);
+      }
+      .icon a img {
+        filter: invert(1);
+        transform: scale(0.5);
+      }
+      .img-box {
+        z-index: 1;
+        grid-column: 3/4;
+        width: 630px;
+        min-height: 50vh;
+        display: flex;
+        justify-content: flex-end;
+        object-fit: contain;
+        align-self: center;
+        overflow: hidden;
+        align-self: center;
+        justify-self: center;
+      }
+      .img-box img {
+        max-width: 150px;
+      }
+      /* SLIDER */
+      .swiper {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 200px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .swiper-slide img {
+        position: absolute;
+        max-height: 100%;
+        bottom: 0;
+      }
+      .swiper-container-3d .swiper-slide-shadow-right,
+      .swiper-container-3d .swiper-slide-shadow-left {
+        background: none;
+      }
+
+      @media screen and (max-width: 1200px) {
+        html {
+          font-size: 50%;
+        }
+        /* nav {
+    flex-direction: column;
+    flex-wrap: wrap;
+  } */
+        /* nav .logo {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  } */
+        .navbar {
+          flex: 0;
+        }
+        .content {
+          text-align: center;
+        }
+        .content-area {
+          grid-template-columns: 1fr;
+        }
+        .img-box {
+          grid-column: 2/3;
+          width: 500px;
+          object-fit: contain;
+        }
+
+        .icons {
+          justify-content: center;
+          align-items: center;
+        }
+        .navbar {
+          display: none;
+        }
+        .logo {
+          position: relative;
+        }
+        .toggle {
+          position: fixed;
+          top: 6%;
+          right: 8%;
+          z-index: 4;
+          width: 30px;
+          height: 30px;
+          background: url("./images/menu.png") no-repeat center center/cover;
+          background-size: 30px;
+        }
+        .toggle.active {
+          background: url("./images/close.png") no-repeat center center/cover;
+          background-size: 25px;
+        }
+        .navbar.active {
+          z-index: 3;
+          background-color: rgb(201, 0, 0);
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .navbar li {
+          margin: 2.6rem 0;
+          font-size: 6rem;
+        }
+      }
+      @media screen and (max-width: 550px) {
+        nav {
+          width: 100%;
+        } /*
+  .navbar {
+    flex-wrap: wrap;
+  } */
+        .img-box {
+          width: 300px;
+          height: 200px;
+        }
+
+        .swiper-slide {
+          width: 150px;
+          height: 300px;
+        }
+      }
+      @media screen and (max-width: 330px) {
+        .toggle {
+          top: 9.7%;
+          right: 45%;
+        }
+        /* .img-box {
+    width: 200px;
+  }*/
+
+        .swiper-slide {
+          width: 100px;
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="container">
+      <div class="circle"></div>
+
+      <header>
+        <nav>
+          <div class="logo">
+            <a href="#"><img src="./images/logo.png" alt="" /></a>
+          </div>
+          <div class="toggle" onclick="toggleMenu()"></div>
+          <ul class="navbar">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="content-area">
+        <div class="content">
+          <h1>Taste The Feeling</h1>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
+            esse id, porro quas ullam facere a consectetur sapiente temporibus
+            laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Possimus, modi?
+          </p>
+          <a class="btn">Learn more</a>
+        </div>
+
+        <div class="img-box">
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img src="./images/cocacola1.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img src="./images/cocacola2.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img src="./images/cocacola3.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img src="./images/cocacola4.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img src="./images/cocacola5.png" alt="" />
+              </div>
+              <div class="swiper-slide">
+                <img src="./images/cocacola6.png" alt="" />
+              </div>
+            </div>
+            <!-- Add Pagination
+            <div class="swiper-pagination"></div>-->
+          </div>
+        </div>
+
+        <ul class="icons">
+          <li class="icon facebook">
+            <a href="http://facebook.com"
+              ><img src="./images/facebook.png" alt=""
+            /></a>
+          </li>
+          <li class="icon">
+            <a href="http://instagram.com"
+              ><img src="./images/instagram.png" alt=""
+            /></a>
+          </li>
+          <li class="icon">
+            <a href="http://twitter.com"
+              ><img src="./images/twitter.png" alt=""
+            /></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".swiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+        loop: true,
+      });
+      function toggleMenu() {
+        const toggle = document.querySelector(".toggle");
+        const navbar = document.querySelector(".navbar");
+
+        toggle.classList.toggle("active");
+        navbar.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
